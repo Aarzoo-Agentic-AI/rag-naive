@@ -18,21 +18,15 @@ from groq import APIError as GroqAPIError
 
 from rag_naive import NaiveRAG, Settings, ingest
 from rag_naive.pipeline import RAGResponse
+from rag_naive.retrieval import citation_label
 
 
 def _print_sources(sources) -> None:
     if not sources:
         return
     print("\nSources:")
-    seen = set()
-    for doc in sources:
-        page = doc.metadata.get("page")
-        key = (doc.metadata.get("source", "unknown"), page)
-        if key in seen:
-            continue
-        seen.add(key)
-        page_label = f" (page {page + 1})" if isinstance(page, int) else ""
-        print(f"  - {key[0]}{page_label}")
+    for label in dict.fromkeys(citation_label(doc) for doc in sources):  # dedupe, keep order
+        print(f"  - {label}")
 
 
 def cmd_ingest(args: argparse.Namespace, settings: Settings) -> int:
