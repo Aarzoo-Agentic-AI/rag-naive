@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from langchain_core.language_models import BaseChatModel
-from langchain_core.output_parsers import StrOutputParser
 from collections.abc import Iterator
 
+from langchain_core.language_models import BaseChatModel
+from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import Runnable, RunnableGenerator
 
 from ..config import Settings

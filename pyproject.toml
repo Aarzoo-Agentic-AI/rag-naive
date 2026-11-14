@@ -1,0 +1,13 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+# End-to-end tests (real embedding model + real Groq API) are opt-in:
+#   pytest -m e2e
+addopts = "-ra -m 'not e2e'"
+markers = [
+    "e2e: end-to-end test using the real embedding model and Groq API (needs GROQ_API_KEY)",
+]
+filterwarnings = [
+    # Third-party deprecation noise (langchain / chromadb / pydantic) is not ours to fix.
+    "ignore::DeprecationWarning",
+]

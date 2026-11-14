@@ -20,6 +20,13 @@ def _env(name: str, default: str) -> str:
     return value if value not in (None, "") else default
 
 
+def _project_path(value: str) -> Path:
+    """Resolve relative paths against the project root, not the current directory,
+    so the CLI finds the same PDFs / index no matter where it is launched from."""
+    path = Path(value)
+    return path if path.is_absolute() else PROJECT_ROOT / path
+
+
 @dataclass(frozen=True)
 class Settings:
     """All tunable parameters of the naive RAG pipeline."""
@@ -32,8 +39,8 @@ class Settings:
         default_factory=lambda: _env("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
     )
 
-    pdf_dir: Path = field(default_factory=lambda: Path(_env("PDF_DIR", "data/pdfs")))
-    chroma_dir: Path = field(default_factory=lambda: Path(_env("CHROMA_DIR", "chroma_db")))
+    pdf_dir: Path = field(default_factory=lambda: _project_path(_env("PDF_DIR", "data/pdfs")))
+    chroma_dir: Path = field(default_factory=lambda: _project_path(_env("CHROMA_DIR", "chroma_db")))
     collection_name: str = field(default_factory=lambda: _env("CHROMA_COLLECTION", "naive_rag"))
 
     chunk_size: int = field(default_factory=lambda: int(_env("CHUNK_SIZE", "1000")))
