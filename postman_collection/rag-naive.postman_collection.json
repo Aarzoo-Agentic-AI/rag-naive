@@ -34,13 +34,8 @@
         "method": "POST",
         "header": [
           {
-            "key": "X-User-Groups",
-            "value": "hr",
-            "type": "text"
-          },
-          {
             "key": "Content-Type",
-            "value": " application/json",
+            "value": "application/json",
             "type": "text"
           }
         ],
@@ -74,18 +69,7 @@
       "name": "ingestion/upload",
       "request": {
         "method": "POST",
-        "header": [
-          {
-            "key": "X-User-Groups",
-            "value": "hr",
-            "type": "text"
-          },
-          {
-            "key": "Content-Type",
-            "value": " application/json",
-            "type": "text"
-          }
-        ],
+        "header": [],
         "body": {
           "mode": "formdata",
           "formdata": [
@@ -93,10 +77,8 @@
               "key": "files",
               "type": "file",
               "uuid": "a8d11e91-7d92-404a-ac48-0c165362060d",
-              "src": [
-                "/C:/Users/aarzo/Downloads/Expense_Policy.pdf",
-                "/C:/Users/aarzo/Downloads/Travel_Policy.pdf"
-              ]
+              "src": [],
+              "description": "Select one or more PDF files (e.g. from data/pdfs)"
             }
           ]
         },
@@ -125,22 +107,7 @@
       },
       "request": {
         "method": "GET",
-        "header": [
-          {
-            "key": "X-User-Groups",
-            "value": "all_staff",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"question\": \"How do I report harassment?\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
+        "header": [],
         "url": {
           "raw": "http://127.0.0.1:8000/documents",
           "protocol": "http",
@@ -162,13 +129,7 @@
       "name": "retrieve",
       "request": {
         "method": "POST",
-        "header": [
-          {
-            "key": "X-User-Groups",
-            "value": "hr",
-            "type": "text"
-          }
-        ],
+        "header": [],
         "body": {
           "mode": "raw",
           "raw": "{\r\n    \"question\": \"How many PTO days do employees get?\",\r\n    \"top_k\": 2\r\n}",
@@ -199,13 +160,7 @@
       "name": "query",
       "request": {
         "method": "POST",
-        "header": [
-          {
-            "key": "X-User-Groups",
-            "value": "hr",
-            "type": "text"
-          }
-        ],
+        "header": [],
         "body": {
           "mode": "raw",
           "raw": "{\r\n    \"question\": \"Who is eligible for the 401(k) match and what is the match percentage?\"\r\n}",
@@ -238,13 +193,8 @@
         "method": "POST",
         "header": [
           {
-            "key": "X-User-Groups",
-            "value": "hr",
-            "type": "text"
-          },
-          {
             "key": "Content-Type",
-            "value": " application/json",
+            "value": "application/json",
             "type": "text"
           }
         ],
