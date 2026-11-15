@@ -1,0 +1,279 @@
+{
+  "info": {
+    "_postman_id": "18c0ebaa-0595-4f32-acc0-9bc49ea9aedc",
+    "name": "RAG",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "2801815"
+  },
+  "item": [
+    {
+      "name": "health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/health",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ingestion",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-User-Groups",
+            "value": "hr",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": " application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"reset\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/ingest",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "ingest"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ingestion/upload",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-User-Groups",
+            "value": "hr",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": " application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "files",
+              "type": "file",
+              "uuid": "a8d11e91-7d92-404a-ac48-0c165362060d",
+              "src": [
+                "/C:/Users/aarzo/Downloads/Expense_Policy.pdf",
+                "/C:/Users/aarzo/Downloads/Travel_Policy.pdf"
+              ]
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/ingest/upload",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "ingest",
+            "upload"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "documents",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-User-Groups",
+            "value": "all_staff",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"question\": \"How do I report harassment?\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/documents",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "documents"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "retrieve",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-User-Groups",
+            "value": "hr",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"question\": \"How many PTO days do employees get?\",\r\n    \"top_k\": 2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/retrieve",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "retrieve"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "query",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-User-Groups",
+            "value": "hr",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"question\": \"Who is eligible for the 401(k) match and what is the match percentage?\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/query",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "query"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "query/stream",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-User-Groups",
+            "value": "hr",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": " application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"question\": \"Who is eligible for the 401(k) match and what is the match percentage?\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/query/stream",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "query",
+            "stream"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
