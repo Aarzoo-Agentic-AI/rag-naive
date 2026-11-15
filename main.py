@@ -5,6 +5,7 @@ Examples:
     python main.py ingest path/to/file.pdf --reset
     python main.py ask "What is the refund policy?"
     python main.py chat                        # interactive Q&A loop
+    python main.py serve                       # REST API on http://127.0.0.1:8000
 """
 
 from __future__ import annotations
@@ -65,6 +66,19 @@ def cmd_chat(_: argparse.Namespace, settings: Settings) -> int:
         print()
 
 
+def cmd_serve(args: argparse.Namespace, _: Settings) -> int:
+    import uvicorn  # imported lazily: only needed for the API
+
+    uvicorn.run(
+        "rag_naive.api.app:app",
+        host=args.host,
+        port=args.port,
+        reload=args.reload,
+        log_level="info",
+    )
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Naive RAG over PDF files (LangChain + ChromaDB + Groq)")
     parser.add_argument("-v", "--verbose", action="store_true", help="enable info logging")
@@ -81,6 +95,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_chat = sub.add_parser("chat", help="interactive question loop")
     p_chat.set_defaults(func=cmd_chat)
+
+    p_serve = sub.add_parser("serve", help="run the REST API (FastAPI + uvicorn)")
+    p_serve.add_argument("--host", default="127.0.0.1", help="bind address (default: 127.0.0.1)")
+    p_serve.add_argument("--port", type=int, default=8000, help="port (default: 8000)")
+    p_serve.add_argument("--reload", action="store_true", help="auto-reload on code changes (dev)")
+    p_serve.set_defaults(func=cmd_serve)
     return parser
 
 

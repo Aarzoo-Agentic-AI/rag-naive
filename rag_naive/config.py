@@ -47,6 +47,9 @@ class Settings:
     chunk_overlap: int = field(default_factory=lambda: int(_env("CHUNK_OVERLAP", "200")))
     top_k: int = field(default_factory=lambda: int(_env("TOP_K", "4")))
 
+    # REST API (rag_naive.api)
+    max_upload_mb: int = field(default_factory=lambda: int(_env("MAX_UPLOAD_MB", "50")))
+
     def require_groq_key(self) -> str:
         if not self.groq_api_key:
             raise RuntimeError(

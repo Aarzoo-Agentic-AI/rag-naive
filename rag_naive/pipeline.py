@@ -60,16 +60,23 @@ class NaiveRAG:
             )
         )
 
-    def retrieve(self, question: str) -> list[Document]:
-        return self.retriever.invoke(question)
+    def retrieve(self, question: str, top_k: int | None = None) -> list[Document]:
+        """Return the nearest chunks; ``top_k`` overrides ``settings.top_k`` for this call."""
+        retriever = self.retriever if top_k is None else build_retriever(self.vectorstore, top_k)
+        return retriever.invoke(question)
 
-    def ask(self, question: str) -> RAGResponse:
-        result = self.chain.invoke({"question": question})
-        return RAGResponse(answer=result["answer"], sources=result["docs"])
+    def ask(self, question: str, top_k: int | None = None) -> RAGResponse:
+        if top_k is None:
+            result = self.chain.invoke({"question": question})
+            return RAGResponse(answer=result["answer"], sources=result["docs"])
 
-    def stream(self, question: str) -> Iterator[str]:
+        docs = self.retrieve(question, top_k)
+        answer = self.generation_chain.invoke({"question": question, "context": format_docs(docs)})
+        return RAGResponse(answer=answer, sources=docs)
+
+    def stream(self, question: str, top_k: int | None = None) -> Iterator[str]:
         """Yield answer tokens; retrieved docs are available via ``self.last_sources``."""
-        docs = self.retrieve(question)
+        docs = self.retrieve(question, top_k)
         self.last_sources = docs
         yield from self.generation_chain.stream(
             {"question": question, "context": format_docs(docs)}
